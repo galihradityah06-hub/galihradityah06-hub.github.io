@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BobaTime - Segar Nikmat</title>
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #e6b87d; /* Warna Susu Teh */
+            --secondary-color: #5d4037; /* Warna Boba */
+            --accent-color: #ff6b6b;
+            --bg-color: #fdfbf7;
+            --text-color: #333;
+            --white: #77919f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Agar scroll halus saat klik menu */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        /* Navigasi Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-btn {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            transition: transform 0.2s;
+        }
+
+        .cart-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .visitor-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #f6f0d9;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 1px solid rgba(93, 64, 55, 0.15);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            z-index: 1100;
+            transition: transform 0.2s;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-3px);
+        }
+
+        /* --- HERO SECTION (HOME) --- */
+        #home {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('tea.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #d4a363;
+            transform: scale(1.05);
+        }
+
+        /* --- MENU SECTION --- */
+        #menu {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Dekorasi garis bawah judul */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .product-description {
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            color: #666;
+            min-height: 48px;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-btn:hover {
+            background-color: #3e2b24;
+        }
+
+        .product-sale {
+            display: block;
+            color: #5d4037;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .stats-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .stats-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .sales-list {
+            margin-top: 1.5rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .sales-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9f4ea;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .sales-item span {
+            color: #5d4037;
+        }
+
+        .sales-chart {
+            margin-top: 1.5rem;
+        }
+
+        .sales-chart-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            background: #fff7e8;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .bar-label {
+            font-size: 0.95rem;
+            color: #5d4037;
+            font-weight: 600;
+        }
+
+        .bar-container {
+            height: 16px;
+            width: 100%;
+            background: #efe2cf;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 999px;
+        }
+
+        /* --- CART MODAL --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6); 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto; /* 🔥 TAMBAHKAN INI */
+            display: flex;
+            flex-direction: column;
+        }
+        
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close-btn:hover {
+            color: black;
+        }
+
+        .cart-items-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin: 1rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-controls button {
+            width: 25px;
+            height: 25px;
+            background: #eee;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* --- CHECKOUT FORM --- */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .wallet-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            margin: 3px 4px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .ewallet-qr-code {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 190px;
+            height: 190px;
+            border: 1px solid #b8e5ff;
+            border-radius: 14px;
+            background: white;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .ewallet-qr-code img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .wallet-badge.ovo { background: #8c207e; }
+        .wallet-badge.gopay { background: #2cbeef; }
+        .wallet-badge.dana { background: #004aad; }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigasi -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">Milk<span>Tea</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Daftar Menu</a></li> <!-- Judul Menu -->
+                <li><a href="#sales-stats">Statistik</a></li>
+            </ul>
+            <div class="visitor-count" id="visitor-count">Total Pengunjung: </div>
+            <div class="cart-btn" onclick="toggleCart()">
+                <i class="fa-solid fa-shopping-bag"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home / Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Pilih Milk Tea yang anda suka</h1>
+            <p>Nikmati menu milk tea terbaik dengan boba kenyal.</p>
+            <a href="#menu" class="btn">Pesan Sekarang</a>
+        </div>
+    </section>
+
+    <!-- Best Seller Section -->
+    <section id="best-seller">
+    <div class="hero-badge">👑 Best Seller Favorit</div>
+        <div class="hero-features">
+           <p class="section-subtitle">5+ Varian unik · Pengiriman cepat · Toping gratis · Menu spesial · Total Pengunjung: <span id="section-visitor-count">0</span></p>
+        <div class="menu-grid" id="bestseller-container">>
+            <!-- Produk best seller akan di-generate oleh JS -->
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <h2 class="section-title">Daftar Menu</h2>
+        <div class="menu-grid" id="menu-container">
+            <!-- Produk akan di-generate oleh JS -->
+        </div>
+    </section>
+
+    <!-- Statistik Penjualan -->
+    <section id="sales-stats">
+        <h2 class="section-title">Statistik Penjualan</h2>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="sales-chart" id="sales-chart"></div>
+        <div class="sales-list" id="sales-list"></div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+            <h2>Keranjang Belanja</h2>
+            <div class="cart-items-container" id="cart-items">
+                <p style="text-align:center; color:#888;">Keranjang kosong</p>
+            </div>
+            <div class="cart-total">Total: Rp <span id="cart-total">0</span></div>
+            <button class="checkout-btn" onclick="openCheckout()">Lanjut ke Pembayaran</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCheckout()">&times;</span>
+            <h2>Pembayaran</h2>
+            <p style="margin-bottom: 15px; font-size: 0.9rem; color: #666;">Total Tagihan: <strong>Rp <span id="pay-amount">0</span></strong></p>
+            
+            <form id="payment-form" onsubmit="processPayment(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Alamat Pengiriman</label>
+                    <input type="text" required placeholder="Jl. Boba No. 1">
+                </div>
+                <div class="form-group">
+                    <label>Metode Pembayaran</label>
+                    <select id="payment-method" onchange="handlePaymentMethodChange()" required>
+                        <option value="" disabled selected>Pilih metode</option>
+                        <option value="transfer">Transfer Bank</option>
+                        <!-- <option value="ewallet">E-Wallet</option> -->
+                        <option value="cod">Bayar di Tempat</option>
+                    </select>
+                </div>
+                <div id="ewallet-provider-group" class="form-group" style="display:none;">
+                    <label>Pilih E-Wallet</label>
+                    <select id="ewallet-provider" onchange="handleEwalletProviderChange()">
+                        <option value="" disabled selected>Pilih E-Wallet</option>
+                        <option value="dana">Dana (QRIS)</option>
+                        <option value="ovo">OVO</option>
+                        <option value="gopay">GoPay</option>
+                    </select>
+                </div>
+                <div id="bank-info" class="form-group" style="display:none; background:#fff9e6; padding:12px; border:1px solid #f0d6a8; border-radius:8px; color:#5e3b1f;">
+                    <strong>Informasi Rekening Transfer Bank:</strong>
+                    <p style="margin:8px 0 0;">BCA 123-456-7890<br>a.n. MilkTea Cafe</p>
+                    <p style="margin:8px 0 0;">Mandiri 987-654-3210<br>a.n. MilkTea Cafe</p>
+                    <div class="form-group" style="margin-top:12px;">
+                        <label>Nomor Rekening Pembeli</label>
+                        <input type="text" id="buyer-account" oninput="updateTransferContinue()" placeholder="Contoh: 1234567890">
+                    </div>
+                    <p id="transfer-continue-text" style="display:none; margin: 10px 0 0; color:#60421d; font-size:0.95rem;">Nomor rekening sudah terisi. Klik tombol Konfirmasi Pesanan di bawah untuk melanjutkan.</p>
+                    <small>Silakan transfer sesuai total tagihan dan simpan bukti pembayaran.</small>
+                </div>
+                <div id="ewallet-info" class="form-group" style="display:none; background:#e8f7ff; padding:16px; border:1px solid #b8e5ff; border-radius:10px; color:#1f4f7a;">
+                    <strong>Pembayaran E-Wallet</strong>
+                    <div style="margin:10px 0; display:flex; flex-wrap:wrap; justify-content:center; gap:6px;">
+                        <span class="wallet-badge ovo" onclick="selectEwalletProvider('ovo')">OVO</span>
+                        <span class="wallet-badge gopay" onclick="selectEwalletProvider('gopay')">GoPay</span>
+                        <span class="wallet-badge dana" onclick="selectEwalletProvider('dana')">Dana</span>
+                    </div>
+                    <p id="ewallet-qr-caption" style="margin:10px 0 14px;">Pilih E-Wallet Anda, lalu pindai QR berikut untuk melanjutkan pembayaran.</p>
+                    <div id="ewallet-qr" style="display:block; text-align:center;">
+                        <div id="ewallet-qr-code" class="ewallet-qr-code">Pilih E-Wallet di atas untuk melihat QR.</div>
+                        <p id="ewallet-qr-footer" style="margin-top:10px; font-size:0.9rem; color:#335a7e;">QR akan tampil setelah Anda memilih Dana, OVO, atau GoPay.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Catatan Pesanan (opsional)</label>
+                    <input type="text" placeholder="Contoh: tidak terlalu manis">
+                </div>
+                <button type="submit" class="checkout-btn">Konfirmasi Pesanan</button>
+            </form>
+            <p style="font-size:0.85rem; color:#666; margin-top:10px;">Jika memilih Transfer Bank, silakan lakukan pembayaran setelah pesanan dikonfirmasi. Jika memilih E-Wallet, pindai QR di layar dengan aplikasi E-Wallet Anda.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 MilkTea. All rights reserved.</p>
+    </footer>
+
+    <a href="https://wa.me/6282335295234?text=Halo%20Saya%20ingin%20memesan%20Milk%20Tea" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>Chat WA</span>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // --- DATA PRODUK ---
+        const products = [
+            {
+                id: 1,
+                name: "Classic Milk Tea",
+                price: 20000,
+                img: "clasic milk tea.jpg",
+                deskripsi: "Teh hitam, susu, gula, dan boba kenyal. Volume 350 ml.",
+                bestSeller: true
+            },
+            {
+                id: 2,
+                name: "Taro Milk Tea",
+                price: 24000,
+                img: "taro.jpg",
+                deskripsi: "Ekstrak taro, susu, gula, dan boba. Volume 350 ml.",
+                bestSeller: true
+            },
+            {
+                id: 3,
+                name: "Brown Sugar Boba",
+                price: 25000,
+                img: "Brown Sugar Boba.jpg",
+                deskripsi: "Susu, teh, boba, dan saus gula aren karamel. Volume 350 ml.",
+                bestSeller: true
+            },
+            {
+                id: 4,
+                name: "Thai Milk Tea",
+                price: 26000,
+                img: "thai tea.jpg",
+                deskripsi: "Teh Thai, susu, gula, dan rempah khas. Volume 350 ml."
+            },
+            {
+                id: 5,
+                name: "Earl Grey Milk Tea",
+                price: 30000,
+                img: "Earl Grey Milk.jpg",
+                deskripsi: "Teh Earl Grey, susu, gula, dan aroma bergamot. Volume 350 ml."
+            },
+            {
+                id: 6,
+                name: "Cheese Tea",
+                price: 32000,
+                img: "cheese tea.jpg",
+                deskripsi: "Teh susu, lapisan krim keju, gula, dan boba. Volume 350 ml.",
+                soldCount: 0
+            }
+        ];
+
+        // --- STATE ---
+        let cart = [];
+
+        function loadSalesData() {
+            const savedSales = JSON.parse(localStorage.getItem('milkTeaProductSales') || '{}');
+            products.forEach(product => {
+                product.soldCount = Number(savedSales[product.id] || product.soldCount || 0);
+            });
+        }
+
+        function saveSalesData() {
+            const salesData = {};
+            products.forEach(product => {
+                salesData[product.id] = product.soldCount;
+            });
+            localStorage.setItem('milkTeaProductSales', JSON.stringify(salesData));
+        }
+
+        // --- INISIALISASI ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSalesData();
+            renderBestSellers();
+            renderMenu();
+            renderSalesStats();
+            updateVisitorCount();
+        });
+
+        function updateVisitorCount() {
+            const visitorKey = 'milkTeaVisitorCount';
+            let count = Number(localStorage.getItem(visitorKey) || 0);
+            count += 1;
+            localStorage.setItem(visitorKey, String(count));
+            const visitorElement = document.getElementById('visitor-count');
+            if (visitorElement) {
+                visitorElement.innerText = `Total Pengunjung: ${count}`;
+            }
+            const sectionVisitorElement = document.getElementById('section-visitor-count');
+            if (sectionVisitorElement) {
+                sectionVisitorElement.innerText = count;
+            }
+        }
+
+        // --- FUNGSI RENDER BEST SELLER ---
+        function renderBestSellers() {
+            const bestsellerContainer = document.getElementById('bestseller-container');
+            const bestSellers = products.filter(product => product.bestSeller);
+            bestsellerContainer.innerHTML = bestSellers.map(product => `
+                <div class="product-card">
+                    <img src="${product.img}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.deskripsi || 'Nikmati sensasi minuman premium kami.'}</p>
+                        <span class="product-price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span class="product-sale">Terjual: ${product.soldCount}</span>
+                        <button class="add-btn" onclick="addToCart(${product.id})">Tambah ke Keranjang</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- FUNGSI RENDER MENU ---
+        function renderMenu() {
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.img}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.deskripsi || 'Nikmati sensasi minuman premium kami.'}</p>
+                        <span class="product-price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span class="product-sale">Terjual: ${product.soldCount}</span>
+                        <button class="add-btn" onclick="addToCart(${product.id})">Tambah ke Keranjang</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSalesStats() {
+            const statsGrid = document.getElementById('stats-grid');
+            const salesList = document.getElementById('sales-list');
+            const totalSold = products.reduce((sum, product) => sum + (product.soldCount || 0), 0);
+            const totalRevenue = products.reduce((sum, product) => sum + ((product.soldCount || 0) * product.price), 0);
+
+            statsGrid.innerHTML = `
+                <div class="stats-card">
+                    <h3>Total Produk Terjual</h3>
+                    <div class="stats-value">${totalSold}</div>
+                </div>
+                <div class="stats-card">
+                    <h3>Total Pendapatan</h3>
+                    <div class="stats-value">Rp ${totalRevenue.toLocaleString('id-ID')}</div>
+                </div>
+                <div class="stats-card">
+                    <h3>Produk Terlaris</h3>
+                    <div class="stats-value">${getTopProductName() || '-'}</div>
+                </div>
+            `;
+
+            salesList.innerHTML = products.map(product => `
+                <div class="sales-item">
+                    <span>${product.name}</span>
+                    <span>Terjual: ${product.soldCount || 0} | Rp ${((product.soldCount || 0) * product.price).toLocaleString('id-ID')}</span>
+                </div>
+            `).join('');
+
+            const chart = document.getElementById('sales-chart');
+            if (!chart) return;
+            const maxSold = Math.max(0, ...products.map(product => product.soldCount || 0));
+            if (maxSold === 0) {
+                chart.innerHTML = '<p style="color:#5d4037; text-align:center; padding:1rem; background:#fff4e6; border-radius:12px;">Belum ada penjualan untuk ditampilkan.</p>';
+            } else {
+                chart.innerHTML = products.map(product => {
+                    const sold = product.soldCount || 0;
+                    const width = maxSold > 0 ? Math.round((sold / maxSold) * 100) : 0;
+                    return `
+                        <div class="sales-chart-item">
+                            <div>
+                                <div class="bar-label">${product.name} (${sold})</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="width: ${width}%;"></div>
+                                </div>
+                            </div>
+                            <div style="min-width: 60px; text-align: right; color:#5d4037; font-weight:700;">${width}%</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function getTopProductName() {
+            const top = products.slice().sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0))[0];
+            return top && top.soldCount > 0 ? top.name : '';
+        }
+
+        // --- FUNGSI KERANJANG ---
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            
+            updateCartUI();
+            
+            // Animasi notifikasi
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = "scale(1.2)";
+            setTimeout(() => cartBtn.style.transform = "scale(1)", 200);
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+
+            // Update jumlah badge
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartCount.innerText = totalQty;
+
+            // Update Total Harga
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            cartTotal.innerText = totalPrice.toLocaleString('id-ID');
+
+            // Render Item di Modal
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="text-align:center; color:#888; padding:20px;">Keranjang Anda kosong.</p>';
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="item-details">
+                            <h4>${item.name}</h4>
+                            <small>Rp ${item.price.toLocaleString('id-ID')}</small>
+                        </div>
+                        <div class="item-controls">
+                            <button onclick="changeQty(${item.id}, -1)">-</button>
+                            <span style="margin: 0 10px;">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function changeQty(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        // --- MODAL CONTROLS ---
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert("Keranjang masih kosong!");
+                return;
+            }
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('pay-amount').innerText = totalPrice.toLocaleString('id-ID');
+            
+            document.getElementById('cart-modal').style.display = 'none';
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        // --- PEMBAYARAN ---
+        function handlePaymentMethodChange() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const bankInfo = document.getElementById('bank-info');
+            const ewalletInfo = document.getElementById('ewallet-info');
+            const ewalletProviderGroup = document.getElementById('ewallet-provider-group');
+            const ewalletProvider = document.getElementById('ewallet-provider');
+            const buyerAccount = document.getElementById('buyer-account');
+            const continueText = document.getElementById('transfer-continue-text');
+
+            if (paymentMethod === 'transfer') {
+                bankInfo.style.display = 'block';
+                ewalletInfo.style.display = 'none';
+                ewalletProviderGroup.style.display = 'none';
+                ewalletProvider.value = '';
+                buyerAccount.required = true;
+                updateTransferContinue();
+            } else if (paymentMethod === 'ewallet') {
+                bankInfo.style.display = 'none';
+                ewalletInfo.style.display = 'block';
+                ewalletProviderGroup.style.display = 'block';
+                ewalletProvider.value = '';
+                buyerAccount.required = false;
+                buyerAccount.value = '';
+                handleEwalletProviderChange();
+                continueText.style.display = 'none';
+            } else {
+                bankInfo.style.display = 'none';
+                ewalletInfo.style.display = 'none';
+                ewalletProviderGroup.style.display = 'none';
+                ewalletProvider.value = '';
+                buyerAccount.required = false;
+                buyerAccount.value = '';
+                continueText.style.display = 'none';
+            }
+        }
+
+        function handleEwalletProviderChange() {
+            const provider = document.getElementById('ewallet-provider').value;
+            const qrBox = document.getElementById('ewallet-qr');
+            const qrCode = document.getElementById('ewallet-qr-code');
+            const caption = document.getElementById('ewallet-qr-caption');
+            const footer = document.getElementById('ewallet-qr-footer');
+            const providerName = provider === 'dana' ? 'Dana' : provider === 'ovo' ? 'OVO' : provider === 'gopay' ? 'GoPay' : '';
+
+            qrBox.style.display = 'block';
+
+            if (providerName) {
+                qrCode.innerHTML = `<img src="${provider}-qr.svg" alt="${providerName} QR" />`;
+                if (provider === 'dana') {
+                    caption.innerText = 'Pindai QRIS Dana untuk melanjutkan pembayaran.';
+                    footer.innerText = 'Gunakan aplikasi Dana untuk memindai QRIS.';
+                } else {
+                    caption.innerText = `Pindai QR ${providerName} untuk melanjutkan pembayaran.`;
+                    footer.innerText = `Gunakan aplikasi ${providerName} untuk memindai QR ini.`;
+                }
+            } else {
+                qrCode.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; color:#667; font-size:0.9rem; font-weight:600; padding:10px; text-align:center;">Pilih E-Wallet untuk menampilkan QR</div>';
+                caption.innerText = 'Pilih E-Wallet Anda, lalu pindai QR berikut untuk melanjutkan pembayaran.';
+                footer.innerText = 'QR akan tampil setelah Anda memilih Dana, OVO, atau GoPay.';
+            }
+        }
+
+        function selectEwalletProvider(provider) {
+            const ewalletProvider = document.getElementById('ewallet-provider');
+            ewalletProvider.value = provider;
+            handleEwalletProviderChange();
+        }
+
+        function updateTransferContinue() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const buyerAccount = document.getElementById('buyer-account').value.trim();
+            const continueText = document.getElementById('transfer-continue-text');
+            const submitButton = document.querySelector('#payment-form button[type=submit]');
+
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
+
+            if (paymentMethod === 'transfer' && buyerAccount) {
+                continueText.style.display = 'block';
+                if (submitButton) submitButton.focus();
+            } else {
+                continueText.style.display = 'none';
+            }
+        }
+
+        function getEwalletQrSvg(provider) {
+            const patterns = {
+                dana: `
+                    <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="190" height="190" fill="#fff"/>
+                        <rect x="12" y="12" width="42" height="42" fill="#004aad"/>
+                        <rect x="136" y="12" width="42" height="42" fill="#004aad"/>
+                        <rect x="12" y="136" width="42" height="42" fill="#004aad"/>
+                        <rect x="62" y="62" width="20" height="20" fill="#004aad"/>
+                        <rect x="96" y="62" width="20" height="20" fill="#004aad"/>
+                        <rect x="62" y="96" width="20" height="20" fill="#004aad"/>
+                        <rect x="96" y="96" width="20" height="20" fill="#004aad"/>
+                        <rect x="44" y="44" width="18" height="18" fill="#004aad"/>
+                        <rect x="128" y="44" width="18" height="18" fill="#004aad"/>
+                        <rect x="44" y="128" width="18" height="18" fill="#004aad"/>
+                        <rect x="128" y="128" width="18" height="18" fill="#004aad"/>
+                        <rect x="76" y="76" width="8" height="8" fill="#004aad"/>
+                        <rect x="92" y="76" width="8" height="8" fill="#004aad"/>
+                        <rect x="76" y="92" width="8" height="8" fill="#004aad"/>
+                        <rect x="92" y="92" width="8" height="8" fill="#004aad"/>
+                    </svg>
+                `,
+                ovo: `
+                    <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="190" height="190" fill="#fff"/>
+                        <rect x="12" y="12" width="42" height="42" fill="#8c207e"/>
+                        <rect x="136" y="12" width="42" height="42" fill="#8c207e"/>
+                        <rect x="12" y="136" width="42" height="42" fill="#8c207e"/>
+                        <rect x="64" y="64" width="24" height="24" fill="#8c207e"/>
+                        <rect x="102" y="64" width="24" height="24" fill="#8c207e"/>
+                        <rect x="64" y="102" width="24" height="24" fill="#8c207e"/>
+                        <rect x="102" y="102" width="24" height="24" fill="#8c207e"/>
+                        <rect x="40" y="40" width="20" height="20" fill="#8c207e"/>
+                        <rect x="130" y="40" width="20" height="20" fill="#8c207e"/>
+                        <rect x="40" y="130" width="20" height="20" fill="#8c207e"/>
+                        <rect x="130" y="130" width="20" height="20" fill="#8c207e"/>
+                        <rect x="70" y="86" width="8" height="8" fill="#8c207e"/>
+                        <rect x="88" y="86" width="8" height="8" fill="#8c207e"/>
+                        <rect x="86" y="70" width="8" height="8" fill="#8c207e"/>
+                        <rect x="86" y="88" width="8" height="8" fill="#8c207e"/>
+                    </svg>
+                `,
+                gopay: `
+                    <svg viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="190" height="190" fill="#fff"/>
+                        <rect x="12" y="12" width="42" height="42" fill="#2cbeef"/>
+                        <rect x="136" y="12" width="42" height="42" fill="#2cbeef"/>
+                        <rect x="12" y="136" width="42" height="42" fill="#2cbeef"/>
+                        <rect x="68" y="68" width="26" height="26" fill="#2cbeef"/>
+                        <rect x="96" y="68" width="26" height="26" fill="#2cbeef"/>
+                        <rect x="68" y="96" width="26" height="26" fill="#2cbeef"/>
+                        <rect x="96" y="96" width="26" height="26" fill="#2cbeef"/>
+                        <rect x="44" y="44" width="18" height="18" fill="#2cbeef"/>
+                        <rect x="128" y="44" width="18" height="18" fill="#2cbeef"/>
+                        <rect x="44" y="128" width="18" height="18" fill="#2cbeef"/>
+                        <rect x="128" y="128" width="18" height="18" fill="#2cbeef"/>
+                        <rect x="76" y="76" width="8" height="8" fill="#2cbeef"/>
+                        <rect x="92" y="76" width="8" height="8" fill="#2cbeef"/>
+                        <rect x="76" y="92" width="8" height="8" fill="#2cbeef"/>
+                        <rect x="92" y="92" width="8" height="8" fill="#2cbeef"/>
+                    </svg>
+                `
+            };
+            return patterns[provider] || '';
+        }
+
+        function processPayment(e) {
+            e.preventDefault();
+            
+            const paymentMethod = document.getElementById('payment-method').value;
+            const buyerAccount = document.getElementById('buyer-account').value.trim();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+
+            if (paymentMethod === 'transfer' && !buyerAccount) {
+                alert('Mohon isi Nomor Rekening Pembeli untuk pembayaran transfer bank.');
+                return;
+            }
+
+            btn.innerText = "Memproses...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                let message = "Pembayaran Berhasil! Terima kasih telah memesan di Milktea.";
+                if (paymentMethod === 'transfer' && buyerAccount) {
+                    message += `\nNomor rekening pembeli: ${buyerAccount}`;
+                }
+                if (paymentMethod === 'ewallet') {
+                    message += "\nSilakan lanjutkan pembayaran dengan memindai QR E-Wallet di layar.";
+                }
+                alert(message);
+                cart.forEach(item => {
+                    const product = products.find(p => p.id === item.id);
+                    if (product) {
+                        product.soldCount += item.qty;
+                    }
+                });
+                saveSalesData();
+                renderBestSellers();
+                renderMenu();
+                renderSalesStats();
+                cart = [];
+                updateCartUI();
+                closeCheckout();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                e.target.reset();
+                document.getElementById('bank-info').style.display = 'none';
+                document.getElementById('ewallet-info').style.display = 'none';
+            }, 1500);
+        }
+
+        // Tutup modal jika klik di luar area konten
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
